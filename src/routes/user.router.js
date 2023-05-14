@@ -4,7 +4,7 @@ import {
   getUsers,
   updateUserById,
   deleteUserById,
-  getUserByIdWithArticles,
+  getUserByIdWithArticles, likeArticle, removeLikeFromArticle,
 } from '../controllers/user.controller.js';
 
 const userRouter = Router();
@@ -14,6 +14,8 @@ userRouter
   .get('/:id', getUserByIdWithArticles)
   .post('/', createUser)
   .put('/:id', updateUserById)
+    .put('/:id/:articleId', likeArticle)
+    .delete('/:id/:articleId', removeLikeFromArticle)
   .delete('/:id', deleteUserById);
 
 export default userRouter;
