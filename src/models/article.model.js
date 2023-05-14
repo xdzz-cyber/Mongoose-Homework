@@ -8,7 +8,8 @@ const articleSchema = new mongoose.Schema({
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     category: {type: String, enum: ['sport', 'games', 'history'], required: true},
     createdAt: {type: Date, default: Date.now},
-    updatedAt: {type: Date}
+    updatedAt: {type: Date},
+    likes: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 articleSchema.pre('save', function (next) {

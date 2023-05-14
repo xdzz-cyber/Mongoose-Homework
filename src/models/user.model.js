@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
     age: {type: Number, min: 1, max: 99},
     numberOfArticles: {type: Number, default: 0},
     createdAt: {type: Date, default: Date.now},
-    updatedAt: {type: Date}
+    updatedAt: {type: Date},
+    likedArticles: [{type: mongoose.Schema.Types.ObjectId, ref: 'Article'}]
 });
 
 userSchema.pre('save', function (next) {
