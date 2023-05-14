@@ -97,19 +97,8 @@ export const deleteUserById = async (req, res, next) => {
     }
 }
 
-// Create post handler to like an article
 export const likeArticle = async (req, res, next) => {
     try {
-        // const article = await Article.findById(req.params.articleId);
-        // if (!article) {
-        //     return res.status(404).json({message: 'Not found article'});
-        // }
-        // article.likes += 1;
-        // await article.save();
-        // res.status(200).json(article);
-
-        // Firstly, find the article and update the likes in article,but don't forget to update user's likedArticles
-        // Secondly, find the user and update the likedArticles
         const article = await Article.findById(req.params.articleId);
         if (!article) {
             return res.status(404).json({message: 'Not found article'});
@@ -120,17 +109,16 @@ export const likeArticle = async (req, res, next) => {
         }
         article.likes.push(user._id);
         await article.save();
-        // Find the user and update the likedArticles
 
         user.likedArticles.push(article._id);
         await user.save();
+
         res.status(200).json(article);
     } catch (err) {
         next(err);
     }
 }
 
-// Create handler to remove like from an article
 export const removeLikeFromArticle = async (req, res, next) => {
     try {
         const article = await Article.findById(req.params.articleId);
@@ -141,13 +129,10 @@ export const removeLikeFromArticle = async (req, res, next) => {
         if (!user) {
             return res.status(404).json({message: 'Not found user'});
         }
-        //article.likes.push(user._id);
-        // remove the user from the likes array
         article.likes = article.likes.filter((like) => {
             return like.toString() !== user._id.toString();
         });
         await article.save();
-        // Find the user and update the likedArticles
         user.likedArticles = user.likedArticles.filter((likedArticle) => {
             return likedArticle.toString() !== article._id.toString();
         });
